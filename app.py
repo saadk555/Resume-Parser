@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.static_folder = 'static'
 
 
-UPLOAD_FOLDER = r"D:\python_workspaces\python_ocr_MS\cv-man_flask-version\UPLOAD_FOLDER"
+UPLOAD_FOLDER = r"D:\python_workspaces\Resume-parser_ms\Resume-Parser\UPLOAD_FOLDER"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)

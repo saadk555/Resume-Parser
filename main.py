@@ -23,7 +23,7 @@ def mainf(filename):
             
     find_word = ''
 
-    inpath = r"D:\python_workspaces\python_ocr_MS\cv-man_flask-version\UPLOAD_FOLDER\\"
+    inpath = r"D:\python_workspaces\Resume-parser_ms\Resume-Parser\UPLOAD_FOLDER\\"
     file = inpath + filename
 
 

@@ -43,9 +43,7 @@ def main(PDF_file):
 		Edu = re.search(r'(EDUCATION|Education:?)[\n|\n\n]([\w\W]*)[\n+\w:?]\n+',text)
 		Skills = re.search(r'(SKILLS|Skills:?)[\n|\n\n]([\w\W]*)[\n+\w:?]\n+',text)
 		Dic = {"Education": str(Edu.group(2)), 'Skills': str(Skills.group(2)) } 
-	#return jsonify(Dic)
-	print(final_text)
-	return final_text
+	return jsonify(Dic)
 
 if __name__ == "__main__":
 	main()
