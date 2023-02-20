@@ -5,8 +5,10 @@ from flask import jsonify
 import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
+import json
+import openai
+import ast
 import re
-
 
 
 
@@ -35,15 +37,38 @@ def main(PDF_file):
 		page.save(filename, "JPEG")
 		image_file_list.append(filename)
 
-#change this one
+
 	for image_file in image_file_list:
 		text = str(((pytesseract.image_to_string(Image.open(image_file)))))
-		#text = text.replace("-\n", "")
+		#text = text.replace("-\n", "") 
+
 		final_text += text
-		Edu = re.search(r'(EDUCATION|Education:?)[\n|\n\n]([\w\W]*)[\n+\w:?]\n+',text)
-		Skills = re.search(r'(SKILLS|Skills:?)[\n|\n\n]([\w\W]*)[\n+\w:?]\n+',text)
-		Dic = {"Education": str(Edu.group(2)), 'Skills': str(Skills.group(2)) } 
-	return jsonify(Dic)
+
+		# Define OpenAI API key 
+		openai.api_key = "<your-api>"
+
+		# Set up the model and prompt
+		model_engine = "text-davinci-003"
+		prompt = final_text + "Please give me the all the data with respective headings as keys. Only dictionary format"
+
+		# Generate a response
+		completion = openai.Completion.create(
+			engine=model_engine,
+			prompt=prompt,
+			max_tokens=2048,
+			n=1,
+			stop=None,
+			temperature=0.5,
+		)
+
+		response = completion.choices[0].text
+
+		final_resp = ' '.join(response.split('\n')).strip()
+		result = ast.literal_eval(re.search('({.+})', final_resp).group(0))
+
+	return jsonify(result)
+
+
 
 if __name__ == "__main__":
 	main()
